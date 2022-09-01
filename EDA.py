@@ -89,7 +89,7 @@ data.describe #기초 통계분석
 
 fig = px.imshow(data.corr(), template='plotly_dark', title='Heatmap')
 fig.show()
-
+fig.write_html('heatmap.html')
 # 시리즈물인 책과 그렇지 않은 책의 평점 분포가 다른지 알고 싶어서 두 그룹의 평점 분포를 그려보았다.
 # plotly.figure_factory를 이용해 distplot을 그렸다.
 
@@ -104,14 +104,16 @@ colors = ['#2BCDC1', '#F66095']
 fig = ff.create_distplot(hist_data, group_labels, bin_size=.2, colors=colors)
 fig.update_layout(title_text='Rating Distribution', template='plotly_dark')
 fig.show()
+fig.write_html('distplot.html')
 
 # 장르별 평점 분포를 비교하기 위해 boxplot을 여러개 그려보았다.
 px.box(data, x="main_genre", y="rating", color='main_genre')
 # 장르별 평점 분포 
-
 fig = px.box(data, x="main_genre", y="rating", color='main_genre', template='plotly_dark')
 fig['layout'].update(title='Rating Distributions by Genre')
 fig.show()
+fig.write_html('boxplot.html')
+
 
 # 책이 너무 두꺼우면 사람들이 많이 읽지 못했을 것 같다는 생각에 likedPercent와 pages의 관련성을 시각화 해보았다.
 # density heatmap은 처음 그려보는데 꽤나 직관적인듯 하다.
@@ -119,6 +121,7 @@ fig.show()
 fig = px.density_heatmap(data, x="pages", y="likedPercent", marginal_x="histogram", marginal_y="histogram", range_x=[0, 500], range_y=[80, 100], template='plotly_dark')
 fig['layout'].update(title='Density Heatmap of LikedPercent vs Pages')
 fig.show()
+fig.write_html('density_heatmap.html')
 
 #마지막으로, best books에 이름을 올린 책들이 어떤 장르들을 가지고 있는지, 
 #비율을 파악하고 싶어서 pie chart를 그려보았다.
@@ -137,3 +140,4 @@ fig.update_traces(textposition='inside')
 fig.update_layout(uniformtext_minsize=12, uniformtext_mode='hide')
 fig['layout'].update(title='Genre Ratio', boxmode='group')
 fig.show()
+fig.write_html('pie.html')
